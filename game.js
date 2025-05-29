@@ -76,6 +76,21 @@ class Game {
             this.handleTouchOrClick(e.touches[0]);
         });
 
+        // 虚拟方向键控制
+        document.querySelectorAll('.control-btn').forEach(button => {
+            button.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // 防止触摸事件导致页面滚动
+                const direction = button.dataset.direction;
+                this.handleVirtualControl(direction);
+            });
+
+            // 添加鼠标点击支持（用于在桌面端测试）
+            button.addEventListener('click', (e) => {
+                const direction = button.dataset.direction;
+                this.handleVirtualControl(direction);
+            });
+        });
+
         // 开始按钮
         document.getElementById("startBtn").addEventListener("click", () => {
             if (this.isGameOver || !this.gameLoop) {
@@ -160,6 +175,22 @@ class Game {
 
         if (this.direction !== opposites[newDirection]) {
             this.nextDirection = newDirection;
+        }
+    }
+
+    handleVirtualControl(direction) {
+        if (this.isGameOver || this.isPaused) return;
+
+        const opposites = {
+            "up": "down",
+            "down": "up",
+            "left": "right",
+            "right": "left"
+        };
+
+        // 防止反向移动
+        if (this.direction !== opposites[direction]) {
+            this.nextDirection = direction;
         }
     }
 
