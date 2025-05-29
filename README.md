@@ -23,7 +23,7 @@
 
 1. 克隆仓库：
 ```bash
-git clone https://github.com/你的用户名/greedy-snake.git
+git clone https://github.com/OGS-1-OGS/snake-game.git
 ```
 
 2. 打开 `index.html` 文件即可开始游戏
@@ -51,4 +51,4 @@ MIT License
 
 ## 🎨 预览
 
-访问 [在线演示](https://你的用户名.github.io/greedy-snake) 体验游戏。 
+访问 [在线演示](https://ogs-1-ogs.github.io/snake-game) 体验游戏。 

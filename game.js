@@ -67,6 +67,15 @@ class Game {
             this.handleKeyPress(e);
         });
 
+        // 触摸和点击控制
+        this.canvas.addEventListener("click", (e) => {
+            this.handleTouchOrClick(e);
+        });
+        this.canvas.addEventListener("touchstart", (e) => {
+            e.preventDefault(); // 防止触摸事件导致页面滚动
+            this.handleTouchOrClick(e.touches[0]);
+        });
+
         // 开始按钮
         document.getElementById("startBtn").addEventListener("click", () => {
             if (this.isGameOver || !this.gameLoop) {
@@ -112,6 +121,45 @@ class Game {
             if (this.direction !== opposites[newDirection]) {
                 this.nextDirection = newDirection;
             }
+        }
+    }
+
+    handleTouchOrClick(event) {
+        if (this.isGameOver || this.isPaused) return;
+
+        // 获取点击/触摸位置相对于画布的坐标
+        const rect = this.canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        // 获取蛇头位置（转换为像素坐标）
+        const headX = this.snake[0].x * this.gridSize;
+        const headY = this.snake[0].y * this.gridSize;
+
+        // 计算点击位置相对于蛇头的方向
+        const dx = x - headX;
+        const dy = y - headY;
+
+        // 根据点击位置确定新方向
+        let newDirection;
+        if (Math.abs(dx) > Math.abs(dy)) {
+            // 水平移动
+            newDirection = dx > 0 ? "right" : "left";
+        } else {
+            // 垂直移动
+            newDirection = dy > 0 ? "down" : "up";
+        }
+
+        // 防止反向移动
+        const opposites = {
+            "up": "down",
+            "down": "up",
+            "left": "right",
+            "right": "left"
+        };
+
+        if (this.direction !== opposites[newDirection]) {
+            this.nextDirection = newDirection;
         }
     }
 
