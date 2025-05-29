@@ -1,0 +1,772 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    color: #e0e0e0;
+}
+
+.game-wrapper {
+    max-width: 800px;
+    width: 100%;
+    background: #2d2d2d;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* 游戏标题和分数板 */
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    color: #e0e0e0;
+    margin-bottom: 15px;
+    font-size: 2em;
+}
+
+.score-board {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.score,
+.high-score {
+    background: #3d3d3d;
+    padding: 10px 20px;
+    border-radius: 8px;
+    min-width: 150px;
+}
+
+.score-label {
+    display: block;
+    color: #a0a0a0;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.score-value {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+/* 游戏画布容器 */
+.canvas-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+#gameCanvas {
+    background: #3d3d3d;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 游戏遮罩层 */
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.overlay-content {
+    text-align: center;
+    color: white;
+}
+
+.overlay-content h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+/* 控制按钮 */
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #2e7d32;
+    color: #e0e0e0;
+}
+
+.btn-secondary {
+    background: #424242;
+    color: #e0e0e0;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.btn-icon {
+    font-size: 1.2em;
+}
+
+/* 游戏说明 */
+.instructions {
+    margin-top: 30px;
+    padding: 20px;
+    background: #3d3d3d;
+    border-radius: 8px;
+}
+
+.instructions h3 {
+    color: #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.instructions ul {
+    list-style-position: inside;
+    color: #a0a0a0;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+}
+
+/* 记录模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal-content {
+    position: relative;
+    background: #2d2d2d;
+    margin: 20px auto;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 2px solid #3d3d3d;
+    background: #2d2d2d;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-header h2 {
+    color: #e0e0e0;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.close-btn {
+    background: #424242;
+    color: #e0e0e0;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    padding: 0;
+}
+
+.close-btn:hover {
+    background: #616161;
+}
+
+.modal-body {
+    padding: 20px;
+    background: #2d2d2d;
+    border-radius: 0 0 8px 8px;
+}
+
+.instructions-content {
+    padding: 0;
+}
+
+.instructions-content h3 {
+    color: #e0e0e0;
+    margin: 20px 0 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.instructions-content h3:first-child {
+    margin-top: 0;
+}
+
+.instructions-content p {
+    margin: 10px 0;
+    line-height: 1.6;
+    color: #a0a0a0;
+}
+
+.instructions-content ul {
+    margin: 10px 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.instructions-content li {
+    margin: 8px 0;
+    line-height: 1.5;
+    color: #a0a0a0;
+}
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+    .modal-content {
+        margin: 10px auto;
+        width: 95%;
+    }
+
+    .modal-header {
+        padding: 12px 15px;
+    }
+
+    .modal-header h2 {
+        font-size: 1.3em;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+
+    .instructions-content h3 {
+        font-size: 1.1em;
+        margin: 15px 0 8px;
+    }
+
+    .instructions-content p,
+    .instructions-content li {
+        font-size: 0.9em;
+        margin: 6px 0;
+    }
+
+    .close-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 1.1em;
+    }
+}
+
+/* 难度选择器 */
+.difficulty-selector {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.difficulty-selector select {
+    background: #3d3d3d;
+    color: #e0e0e0;
+    border: 1px solid #616161;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.difficulty-selector select:hover {
+    border-color: #757575;
+    background: #424242;
+}
+
+.difficulty-selector select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* 移动端虚拟方向键 */
+.virtual-controls {
+    display: none;
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 5px auto;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    padding: 6px;
+}
+
+.virtual-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+}
+
+.control-btn {
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    min-height: 45px;
+}
+
+.control-btn:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0.95);
+}
+
+.control-btn.up {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.control-btn.down {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.control-btn.left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.control-btn.right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .game-wrapper {
+        padding: 5px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .game-container {
+        gap: 5px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    /* 调整游戏头部 */
+    .game-header {
+        order: 0;
+        /* 保持最上方 */
+        margin-bottom: 5px;
+    }
+
+    /* 调整画布容器 */
+    .canvas-container {
+        flex: 1;
+        min-height: 0;
+        position: relative;
+        order: 1;
+        /* 放在头部下方 */
+        margin: 5px 0;
+    }
+
+    /* 调整控制按钮区域 */
+    .controls {
+        position: relative;
+        z-index: 2;
+        margin: 5px 0;
+        gap: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        order: 2;
+        /* 放在画布下方 */
+    }
+
+    /* 调整虚拟方向键位置和大小 */
+    .virtual-controls {
+        display: block !important;
+        width: 150px;
+        height: 150px;
+        margin: 8px auto;
+    }
+
+    /* 调整难度选择器 */
+    .difficulty-selector {
+        order: 4;
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .difficulty-selector select {
+        padding: 4px 8px;
+        font-size: 0.85em;
+        min-width: 70px;
+    }
+
+    /* 确保游戏画布大小合适 */
+    #gameCanvas {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        max-height: calc(100vh - 400px);
+        /* 限制最大高度，确保其他元素有足够空间 */
+    }
+
+    .game-header h1 {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+    }
+
+    .score-board {
+        gap: 5px;
+        margin-top: 2px;
+    }
+
+    .score,
+    .high-score {
+        min-width: 90px;
+        padding: 4px 6px;
+    }
+
+    .score-label {
+        font-size: 0.65em;
+        margin-bottom: 1px;
+    }
+
+    .score-value {
+        font-size: 1em;
+    }
+
+    .btn {
+        padding: 4px 8px;
+        font-size: 0.85em;
+        min-width: 70px;
+    }
+
+    .btn-icon {
+        font-size: 1em;
+    }
+
+    .modal {
+        padding-top: 10px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 0 auto;
+        padding: 15px;
+    }
+
+    .instructions-modal {
+        max-width: 95%;
+        margin-top: 10px;
+    }
+
+    .instructions-modal .modal-body {
+        padding: 15px;
+    }
+
+    .instructions-modal .instructions-list {
+        font-size: 0.9em;
+    }
+
+    .instructions-modal .instructions-list li {
+        margin-bottom: 10px;
+    }
+
+    .instructions-modal .instructions-list li ul {
+        margin: 5px 0 5px 15px;
+    }
+
+    .control-btn {
+        font-size: 24px;
+        min-height: 40px;
+    }
+}
+
+/* 移除旧的媒体查询 */
+@media (max-width: 768px) {
+    .virtual-controls {
+        display: block !important;
+    }
+}
+
+/* 游戏说明模态框样式 */
+.instructions-modal {
+    max-width: 600px;
+    max-height: 85vh;
+    margin-top: 20px;
+}
+
+.instructions-modal .modal-body {
+    padding: 20px;
+}
+
+.instructions-modal .instructions-list {
+    list-style-position: inside;
+    color: #a0a0a0;
+    margin: 0;
+    padding: 0;
+}
+
+.instructions-modal .instructions-list li {
+    margin-bottom: 15px;
+}
+
+.instructions-modal .instructions-list li ul {
+    margin: 8px 0 8px 20px;
+    list-style-type: disc;
+}
+
+.instructions-modal .instructions-list li strong {
+    color: #e0e0e0;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.instructions-modal .instructions-list li ul li {
+    margin-bottom: 5px;
+}
+
+/* 隐藏原始游戏说明 */
+.instructions {
+    display: none;
+}
+
+/* 记录模态框样式 */
+#recordsModal .modal-content {
+    background: #2d2d2d;
+    color: #e0e0e0;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+#recordsModal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 2px solid #3d3d3d;
+    background: #2d2d2d;
+    border-radius: 8px 8px 0 0;
+}
+
+#recordsModal .modal-header h2 {
+    color: #e0e0e0;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+#recordsModal .close-btn {
+    background: #424242;
+    color: #e0e0e0;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    padding: 0;
+}
+
+#recordsModal .close-btn:hover {
+    background: #616161;
+}
+
+#recordsList {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 15px;
+    background: #2d2d2d;
+    border-radius: 0 0 8px 8px;
+}
+
+#recordsList::-webkit-scrollbar {
+    width: 8px;
+}
+
+#recordsList::-webkit-scrollbar-track {
+    background: #2d2d2d;
+    border-radius: 4px;
+}
+
+#recordsList::-webkit-scrollbar-thumb {
+    background: #616161;
+    border-radius: 4px;
+}
+
+#recordsList::-webkit-scrollbar-thumb:hover {
+    background: #757575;
+}
+
+.record-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background: #3d3d3d;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.record-item:hover {
+    background: #424242;
+}
+
+.record-item .rank {
+    font-weight: bold;
+    color: #e0e0e0;
+    min-width: 40px;
+    font-size: 1.1em;
+}
+
+.record-item .score {
+    color: #4CAF50;
+    font-weight: 600;
+    font-size: 1.2em;
+    margin: 0 15px;
+}
+
+.record-item .date {
+    color: #a0a0a0;
+    font-size: 0.9em;
+    text-align: right;
+    flex: 1;
+}
+
+/* 前三名特殊样式 */
+.record-item:nth-child(1) .rank {
+    color: #ffd700;
+    font-size: 1.3em;
+}
+
+.record-item:nth-child(2) .rank {
+    color: #c0c0c0;
+    font-size: 1.2em;
+}
+
+.record-item:nth-child(3) .rank {
+    color: #cd7f32;
+    font-size: 1.2em;
+}
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+    #recordsModal .modal-content {
+        margin: 10px auto;
+        width: 95%;
+    }
+
+    #recordsModal .modal-header {
+        padding: 12px 15px;
+    }
+
+    #recordsModal .modal-header h2 {
+        font-size: 1.3em;
+    }
+
+    #recordsList {
+        padding: 10px;
+        max-height: 300px;
+    }
+
+    .record-item {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+
+    .record-item .rank {
+        font-size: 1em;
+        min-width: 30px;
+    }
+
+    .record-item .score {
+        font-size: 1.1em;
+        margin: 0 10px;
+    }
+
+    .record-item .date {
+        font-size: 0.8em;
+    }
+
+    .record-item:nth-child(1) .rank {
+        font-size: 1.2em;
+    }
+
+    .record-item:nth-child(2) .rank,
+    .record-item:nth-child(3) .rank {
+        font-size: 1.1em;
+    }
+}
