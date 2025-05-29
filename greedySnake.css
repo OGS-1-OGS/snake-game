@@ -1,91 +1,90 @@
-:root {
-    --primary-color: #4CAF50;
-    --secondary-color: #2196F3;
-    --background-color: #1a1a1a;
-    --text-color: #ffffff;
-    --border-radius: 10px;
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
+/* 全局样式 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    min-height: 100vh;
+    background-color: #1a1a1a;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
     padding: 20px;
+    color: #e0e0e0;
 }
 
 .game-wrapper {
-    display: flex;
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
+    background: #2d2d2d;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    padding: 20px;
 }
 
 .game-container {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
+/* 游戏标题和分数板 */
 .game-header {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .game-header h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    color: #e0e0e0;
+    margin-bottom: 15px;
+    font-size: 2em;
 }
 
 .score-board {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .score,
 .high-score {
-    text-align: center;
+    background: #3d3d3d;
+    padding: 10px 20px;
+    border-radius: 8px;
+    min-width: 150px;
 }
 
 .score-label {
     display: block;
+    color: #a0a0a0;
     font-size: 0.9em;
-    color: #888;
+    margin-bottom: 5px;
 }
 
 .score-value {
-    font-size: 2em;
-    font-weight: bold;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #e0e0e0;
 }
 
+/* 游戏画布容器 */
 .canvas-container {
     position: relative;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
-canvas {
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--border-radius);
-    background-color: rgba(255, 255, 255, 0.03);
+#gameCanvas {
+    background: #3d3d3d;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* 游戏遮罩层 */
 .game-overlay {
     position: absolute;
     top: 0;
@@ -96,71 +95,80 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: var(--border-radius);
+    border-radius: 8px;
 }
 
 .overlay-content {
     text-align: center;
+    color: white;
 }
 
+.overlay-content h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+/* 控制按钮 */
 .controls {
     display: flex;
     gap: 15px;
-    justify-content: center;
+    margin-top: 20px;
 }
 
 .btn {
-    padding: 12px 24px;
-    font-size: 1em;
+    padding: 10px 20px;
     border: none;
-    border-radius: 25px;
+    border-radius: 8px;
+    font-size: 1em;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
     gap: 8px;
-    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #2e7d32;
+    color: #e0e0e0;
+}
+
+.btn-secondary {
+    background: #424242;
+    color: #e0e0e0;
 }
 
 .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.btn-primary {
-    background: linear-gradient(45deg, var(--primary-color), #45a049);
-}
-
-.btn-secondary {
-    background: linear-gradient(45deg, var(--secondary-color), #1976D2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .btn-icon {
     font-size: 1.2em;
 }
 
+/* 游戏说明 */
 .instructions {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: var(--border-radius);
-    max-width: 300px;
+    margin-top: 30px;
+    padding: 20px;
+    background: #3d3d3d;
+    border-radius: 8px;
 }
 
 .instructions h3 {
+    color: #e0e0e0;
     margin-bottom: 15px;
-    color: var(--primary-color);
 }
 
 .instructions ul {
     list-style-position: inside;
-    color: #ccc;
+    color: #a0a0a0;
 }
 
 .instructions li {
-    margin-bottom: 10px;
-    line-height: 1.4;
+    margin-bottom: 8px;
 }
 
+/* 记录模态框 */
 .modal {
     display: none;
     position: fixed;
@@ -168,18 +176,20 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
 
 .modal-content {
-    background: #2a2a2a;
-    margin: 15% auto;
-    padding: 25px;
-    width: 90%;
-    max-width: 600px;
-    border-radius: var(--border-radius);
     position: relative;
+    background: #2d2d2d;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
 }
 
 .modal-header {
@@ -187,57 +197,167 @@ canvas {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3d3d3d;
+}
+
+.modal-header h2 {
+    color: #e0e0e0;
+    font-size: 1.5em;
+    margin: 0;
 }
 
 .close-btn {
-    background: none;
+    background: #424242;
+    color: #e0e0e0;
     border: none;
-    color: #fff;
-    font-size: 28px;
+    padding: 8px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    padding: 0 8px;
+    transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+    background: #616161;
 }
 
 #recordsList {
-    max-height: 400px;
+    max-height: 300px;
     overflow-y: auto;
+    margin-top: 15px;
+    background: #3d3d3d;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#recordsList::-webkit-scrollbar {
+    width: 8px;
+}
+
+#recordsList::-webkit-scrollbar-track {
+    background: #2d2d2d;
+    border-radius: 4px;
+}
+
+#recordsList::-webkit-scrollbar-thumb {
+    background: #616161;
+    border-radius: 4px;
+}
+
+#recordsList::-webkit-scrollbar-thumb:hover {
+    background: #757575;
 }
 
 .record-item {
-    padding: 15px;
-    margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: #424242;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 .record-item:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #4a4a4a;
 }
 
-@media (max-width: 1024px) {
-    .game-wrapper {
-        flex-direction: column;
-    }
-
-    .instructions {
-        max-width: none;
-    }
+.record-item .rank {
+    font-weight: bold;
+    color: #e0e0e0;
+    min-width: 40px;
 }
 
+.record-item .score {
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+.record-item .date {
+    color: #a0a0a0;
+    font-size: 0.9em;
+}
+
+/* 前三名特殊样式 */
+.record-item:nth-child(1) .rank {
+    color: #ffd700;
+}
+
+.record-item:nth-child(2) .rank {
+    color: #c0c0c0;
+}
+
+.record-item:nth-child(3) .rank {
+    color: #cd7f32;
+}
+
+/* 难度选择器 */
+.difficulty-selector {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.difficulty-selector label {
+    color: #e0e0e0;
+    margin-right: 10px;
+}
+
+.difficulty-selector select {
+    background: #3d3d3d;
+    color: #e0e0e0;
+    border: 1px solid #616161;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.difficulty-selector select:hover {
+    border-color: #757575;
+}
+
+.difficulty-selector select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* 响应式设计 */
 @media (max-width: 600px) {
-    .game-container {
+    .game-wrapper {
         padding: 15px;
     }
 
     .game-header h1 {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 
-    canvas {
+    .score-board {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .score,
+    .high-score {
+        width: 100%;
+    }
+
+    #gameCanvas {
         width: 100%;
         height: auto;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .difficulty-selector {
+        margin: 15px 0;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
     }
 }
