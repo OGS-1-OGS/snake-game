@@ -335,67 +335,112 @@ body {
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
-/* 移动端虚拟方向键 */
+/* 虚拟方向键样式 */
 .virtual-controls {
     display: none;
-    position: relative;
-    width: 160px;
-    height: 160px;
-    margin: 5px auto;
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 15px;
-    padding: 6px;
-}
-
-.virtual-controls-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 8px;
-    width: 100%;
-    height: 100%;
+    /* 默认隐藏，在移动端显示 */
+    justify-content: center;
+    gap: 20px;
+    /* 进一步增加基础间距 */
+    margin-top: 25px;
+    padding: 20px;
 }
 
 .control-btn {
-    background: rgba(255, 255, 255, 0.25);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 28px;
+    width: 100px;
+    /* 进一步增加基础按钮尺寸 */
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    /* 增加圆角 */
+    color: #fff;
+    font-size: 40px;
+    /* 增加图标大小 */
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    min-height: 45px;
 }
 
 .control-btn:active {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
     transform: scale(0.95);
 }
 
-.control-btn.up {
-    grid-column: 2;
-    grid-row: 1;
+/* 移动端适配 */
+@media (max-width: 600px) {
+    .virtual-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 35px;
+        /* 进一步增加垂直按钮之间的间距 */
+        margin-top: 30px;
+        padding: 25px;
+    }
+
+    .control-row {
+        display: flex;
+        gap: 35px;
+        /* 进一步增加水平按钮之间的间距 */
+    }
+
+    .control-btn {
+        width: 120px;
+        /* 在移动端进一步增加按钮尺寸 */
+        height: 120px;
+        font-size: 48px;
+        /* 在移动端增加图标大小 */
+        background: rgba(255, 255, 255, 0.15);
+        border: 4px solid rgba(255, 255, 255, 0.25);
+    }
+
+    /* 调整上下左右按钮的布局 */
+    .control-row:nth-child(1) .control-btn {
+        margin-bottom: 15px;
+        /* 增加上按钮的下边距 */
+    }
+
+    .control-row:nth-child(2) {
+        gap: 40px;
+        /* 进一步增加左右按钮之间的间距 */
+    }
+
+    .control-row:nth-child(3) .control-btn {
+        margin-top: 15px;
+        /* 增加下按钮的上边距 */
+    }
 }
 
-.control-btn.down {
-    grid-column: 2;
-    grid-row: 3;
-}
+/* 响应式设计中的虚拟方向键调整 */
+@media (max-width: 600px) {
+    .virtual-controls {
+        width: auto;
+        /* 移除固定宽度限制 */
+        height: auto;
+        margin: 20px auto;
+        padding: 25px;
+    }
 
-.control-btn.left {
-    grid-column: 1;
-    grid-row: 2;
-}
+    /* 确保按钮在较小屏幕上也能保持合适大小 */
+    .control-btn {
+        min-width: 120px;
+        min-height: 120px;
+    }
 
-.control-btn.right {
-    grid-column: 3;
-    grid-row: 2;
+    /* 调整游戏容器以适应更大的控制按钮 */
+    .game-container {
+        gap: 15px;
+    }
+
+    /* 调整画布容器以适应更大的控制按钮 */
+    .canvas-container {
+        margin: 15px 0;
+    }
 }
 
 /* 响应式设计 */
