@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏</title>
+    <link rel="stylesheet" href="greedySnake.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-wrapper">
+        <div class="game-container">
+            <div class="game-header">
+                <h1>贪吃蛇大作战</h1>
+                <div class="score-board">
+                    <div class="score">
+                        <span class="score-label">当前分数</span>
+                        <span id="scoreText" class="score-value">0</span>
+                    </div>
+                    <div class="high-score">
+                        <span class="score-label">最高分数</span>
+                        <span id="highScoreText" class="score-value">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="400" height="400"></canvas>
+                <div class="game-overlay" id="gameOverlay">
+                    <div class="overlay-content">
+                        <h2>准备开始</h2>
+                        <p>使用方向键控制蛇的移动</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" class="btn btn-primary">
+                    <span class="btn-icon">▶</span>
+                    开始游戏
+                </button>
+                <button id="recordsBtn" class="btn btn-secondary">
+                    <span class="btn-icon">📊</span>
+                    查看记录
+                </button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>游戏说明</h3>
+            <ul>
+                <li>使用 ↑ ↓ ← → 方向键控制蛇的移动</li>
+                <li>吃到食物可以增加分数和长度</li>
+                <li>注意不要撞到自己</li>
+                <li>同时会出现多个食物，抓住机会获得高分！</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="recordsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>游戏记录</h2>
+                <button id="closeModal" class="close-btn">&times;</button>
+            </div>
+            <div id="recordsList"></div>
+        </div>
+    </div>
+    <script src="greedySnake.js"></script>
+</body>
+
+</html>

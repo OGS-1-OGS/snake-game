@@ -1,0 +1,243 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --background-color: #1a1a1a;
+    --text-color: #ffffff;
+    --border-radius: 10px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.game-wrapper {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.game-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.score,
+.high-score {
+    text-align: center;
+}
+
+.score-label {
+    display: block;
+    font-size: 0.9em;
+    color: #888;
+}
+
+.score-value {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.canvas-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+canvas {
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+}
+
+.overlay-content {
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 24px;
+    font-size: 1em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), #45a049);
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, var(--secondary-color), #1976D2);
+}
+
+.btn-icon {
+    font-size: 1.2em;
+}
+
+.instructions {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    max-width: 300px;
+}
+
+.instructions h3 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.instructions ul {
+    list-style-position: inside;
+    color: #ccc;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #2a2a2a;
+    margin: 15% auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: var(--border-radius);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+#recordsList {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.record-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.record-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 1024px) {
+    .game-wrapper {
+        flex-direction: column;
+    }
+
+    .instructions {
+        max-width: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .game-container {
+        padding: 15px;
+    }
+
+    .game-header h1 {
+        font-size: 2em;
+    }
+
+    canvas {
+        width: 100%;
+        height: auto;
+    }
+}
