@@ -115,12 +115,7 @@
 
         <!-- 添加虚拟方向键 -->
         <div class="virtual-controls">
-            <div class="virtual-controls-grid">
-                <button class="control-btn up" data-direction="up">↑</button>
-                <button class="control-btn down" data-direction="down">↓</button>
-                <button class="control-btn left" data-direction="left">←</button>
-                <button class="control-btn right" data-direction="right">→</button>
-            </div>
+            <div id="joystick-zone"></div>
         </div>
     </div>
 
@@ -135,6 +130,38 @@
     </div>
     <script src="audioSystem.js"></script>
     <script src="game.js"></script>
+    <style>
+        /* 摇杆容器样式优化 */
+        .virtual-controls {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 160px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        #joystick-zone {
+            width: 120px;
+            height: 120px;
+            pointer-events: auto;
+            /* 默认居中 */
+            margin: 0 auto;
+            position: absolute;
+            left: 32px;
+            bottom: 32px;
+            /* PC端居中，移动端左下 */
+        }
+
+        @media (min-width: 700px) {
+            #joystick-zone {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 32px;
+            }
+        }
+    </style>
 </body>
 
 </html>
