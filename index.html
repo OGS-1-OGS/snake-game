@@ -131,11 +131,22 @@
     <script src="audioSystem.js"></script>
     <script src="game.js"></script>
     <style>
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #181818;
+        }
+
         /* 页面整体向上移动 */
         .game-wrapper {
             margin-top: 0 !important;
             padding-top: 0 !important;
-            /* 如需更高可用 transform: translateY(-30px); */
+            transform: none !important;
         }
 
         .virtual-controls {
