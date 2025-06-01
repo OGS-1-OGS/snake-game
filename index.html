@@ -82,9 +82,10 @@
 
                         <h3>游戏规则</h3>
                         <p>1. 控制蛇吃到食物来增加长度和分数</p>
-                        <p>2. 撞到墙壁或自己的身体会导致游戏结束</p>
+                        <p>2. 撞到墙壁会导致游戏结束</p>
                         <p>3. 游戏会记录最高分，可以在记录中查看历史得分</p>
                         <p>4. 游戏中同时存在5个食物，吃到后会立即生成新的食物</p>
+                        <p>5. 蛇可以穿过自己的身体继续移动</p>
 
                         <h3>特殊食物效果</h3>
                         <p>1. 红色食物：普通食物，得1分</p>
@@ -146,7 +147,7 @@
         .game-wrapper {
             margin-top: 0 !important;
             padding-top: 0 !important;
-            transform: none !important;
+            transform: translateY(-30px);
         }
 
         .virtual-controls {
@@ -166,16 +167,23 @@
             margin: 0 auto;
             position: absolute;
             left: 50% !important;
-            bottom: 48px !important;
+            bottom: 32px !important;
             transform: translateX(-50%);
-            background: none !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: background-color 0.2s;
+        }
+
+        #joystick-zone:active {
+            background: rgba(255, 255, 255, 0.15) !important;
         }
 
         @media (min-width: 700px) {
             #joystick-zone {
                 left: 50% !important;
                 transform: translateX(-50%);
-                bottom: 48px !important;
+                bottom: 32px !important;
             }
         }
     </style>

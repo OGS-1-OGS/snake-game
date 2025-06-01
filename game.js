@@ -279,18 +279,14 @@ class Game {
             case "right": head.x++; break;
         }
 
-        // 无敌状态下可以穿过墙壁
+        // 只在非无敌状态下检查墙壁碰撞
         if (!this.isInvincible) {
             if (head.x < 0 || head.x >= this.canvas.width / this.gridSize ||
                 head.y < 0 || head.y >= this.canvas.height / this.gridSize) {
                 this.gameOver();
                 return;
             }
-
-            if (this.isCollision(head)) {
-                this.gameOver();
-                return;
-            }
+            // 移除了蛇身碰撞检测
         } else {
             // 无敌状态下穿墙
             if (head.x < 0) head.x = this.canvas.width / this.gridSize - 1;
@@ -640,23 +636,25 @@ function createNativeJoystick(options) {
     base.style.position = 'relative';
     base.style.width = size + 'px';
     base.style.height = size + 'px';
-    base.style.background = 'rgba(33,150,243,0.15)';
+    base.style.background = 'rgba(255, 255, 255, 0.1)';
     base.style.borderRadius = '50%';
-    base.style.boxShadow = '0 2px 8px rgba(33,150,243,0.2)';
+    base.style.boxShadow = '0 2px 8px rgba(255, 255, 255, 0.15)';
     base.style.margin = '0 auto';
     base.style.touchAction = 'none';
+    base.style.transition = 'transform 0.1s';
+
     // 创建摇杆手柄
     const stick = document.createElement('div');
-    const stickSize = size * 0.45;
+    const stickSize = size * 0.5;
     stick.style.position = 'absolute';
     stick.style.left = (size - stickSize) / 2 + 'px';
     stick.style.top = (size - stickSize) / 2 + 'px';
     stick.style.width = stickSize + 'px';
     stick.style.height = stickSize + 'px';
-    stick.style.background = 'linear-gradient(145deg, #2196f3 60%, #90caf9 100%)';
+    stick.style.background = 'linear-gradient(145deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 100%)';
     stick.style.borderRadius = '50%';
-    stick.style.boxShadow = '0 4px 12px rgba(33,150,243,0.25)';
-    stick.style.transition = 'left 0.1s, top 0.1s';
+    stick.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    stick.style.transition = 'transform 0.1s, box-shadow 0.1s';
     base.appendChild(stick);
     zone.innerHTML = '';
     zone.appendChild(base);
@@ -664,10 +662,13 @@ function createNativeJoystick(options) {
     let dragging = false;
     let startX, startY;
     let lastDirection = null;
+    let lastMoveTime = 0;
+    const moveThreshold = 50; // 移动检测阈值（毫秒）
 
     function getDirection(dx, dy) {
         const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-        if (Math.abs(dx) < size * 0.15 && Math.abs(dy) < size * 0.15) return null;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < size * 0.1) return null;
         if (angle >= -45 && angle < 45) return 'right';
         if (angle >= 45 && angle < 135) return 'down';
         if (angle >= 135 || angle < -135) return 'left';
@@ -676,6 +677,10 @@ function createNativeJoystick(options) {
     }
 
     function handleMove(clientX, clientY) {
+        const now = Date.now();
+        if (now - lastMoveTime < moveThreshold) return;
+        lastMoveTime = now;
+
         const rect = base.getBoundingClientRect();
         const dx = clientX - (rect.left + size / 2);
         const dy = clientY - (rect.top + size / 2);
@@ -683,8 +688,16 @@ function createNativeJoystick(options) {
         const angle = Math.atan2(dy, dx);
         const stickX = Math.cos(angle) * dist + size / 2 - stickSize / 2;
         const stickY = Math.sin(angle) * dist + size / 2 - stickSize / 2;
+
+        // 添加缩放效果
+        const scale = 1 - (dist / (size / 2)) * 0.1;
+        base.style.transform = `scale(${scale})`;
+
         stick.style.left = stickX + 'px';
         stick.style.top = stickY + 'px';
+        stick.style.transform = `scale(${1 + (dist / (size / 2)) * 0.1})`;
+        stick.style.boxShadow = `0 ${4 + dist * 0.1}px ${12 + dist * 0.2}px rgba(0,0,0,${0.15 + dist * 0.001})`;
+
         // 方向判断
         const direction = getDirection(dx, dy);
         if (direction && direction !== lastDirection) {
@@ -706,6 +719,9 @@ function createNativeJoystick(options) {
     function resetStick() {
         stick.style.left = (size - stickSize) / 2 + 'px';
         stick.style.top = (size - stickSize) / 2 + 'px';
+        stick.style.transform = '';
+        stick.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        base.style.transform = '';
         lastDirection = null;
     }
 
@@ -750,6 +766,6 @@ window.addEventListener('DOMContentLoaded', function () {
     window.game = new Game();
     createNativeJoystick({
         zone: document.getElementById('joystick-zone'),
-        size: 100
+        size: 160
     });
 });
