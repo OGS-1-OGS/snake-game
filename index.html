@@ -131,34 +131,40 @@
     <script src="audioSystem.js"></script>
     <script src="game.js"></script>
     <style>
-        /* 摇杆容器样式优化 */
+        /* 页面整体向上移动 */
+        .game-wrapper {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+            /* 如需更高可用 transform: translateY(-30px); */
+        }
+
         .virtual-controls {
             position: fixed;
             left: 0;
             bottom: 0;
             width: 100vw;
-            height: 160px;
+            height: 200px;
             pointer-events: none;
             z-index: 1000;
         }
 
         #joystick-zone {
-            width: 120px;
-            height: 120px;
+            width: 160px !important;
+            height: 160px !important;
             pointer-events: auto;
-            /* 默认居中 */
             margin: 0 auto;
             position: absolute;
-            left: 32px;
-            bottom: 32px;
-            /* PC端居中，移动端左下 */
+            left: 50% !important;
+            bottom: 48px !important;
+            transform: translateX(-50%);
+            background: none !important;
         }
 
         @media (min-width: 700px) {
             #joystick-zone {
-                left: 50%;
+                left: 50% !important;
                 transform: translateX(-50%);
-                bottom: 32px;
+                bottom: 48px !important;
             }
         }
     </style>
