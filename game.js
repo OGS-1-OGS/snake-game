@@ -631,7 +631,125 @@ class Game {
     }
 }
 
-// 当页面加载完成时初始化游戏
-document.addEventListener("DOMContentLoaded", () => {
+// 原生JS摇杆实现
+function createNativeJoystick(options) {
+    const zone = options.zone;
+    const size = options.size || 100;
+    // 创建摇杆底座
+    const base = document.createElement('div');
+    base.style.position = 'relative';
+    base.style.width = size + 'px';
+    base.style.height = size + 'px';
+    base.style.background = 'rgba(33,150,243,0.15)';
+    base.style.borderRadius = '50%';
+    base.style.boxShadow = '0 2px 8px rgba(33,150,243,0.2)';
+    base.style.margin = '0 auto';
+    base.style.touchAction = 'none';
+    // 创建摇杆手柄
+    const stick = document.createElement('div');
+    const stickSize = size * 0.45;
+    stick.style.position = 'absolute';
+    stick.style.left = (size - stickSize) / 2 + 'px';
+    stick.style.top = (size - stickSize) / 2 + 'px';
+    stick.style.width = stickSize + 'px';
+    stick.style.height = stickSize + 'px';
+    stick.style.background = 'linear-gradient(145deg, #2196f3 60%, #90caf9 100%)';
+    stick.style.borderRadius = '50%';
+    stick.style.boxShadow = '0 4px 12px rgba(33,150,243,0.25)';
+    stick.style.transition = 'left 0.1s, top 0.1s';
+    base.appendChild(stick);
+    zone.innerHTML = '';
+    zone.appendChild(base);
+
+    let dragging = false;
+    let startX, startY;
+    let lastDirection = null;
+
+    function getDirection(dx, dy) {
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        if (Math.abs(dx) < size * 0.15 && Math.abs(dy) < size * 0.15) return null;
+        if (angle >= -45 && angle < 45) return 'right';
+        if (angle >= 45 && angle < 135) return 'down';
+        if (angle >= 135 || angle < -135) return 'left';
+        if (angle >= -135 && angle < -45) return 'up';
+        return null;
+    }
+
+    function handleMove(clientX, clientY) {
+        const rect = base.getBoundingClientRect();
+        const dx = clientX - (rect.left + size / 2);
+        const dy = clientY - (rect.top + size / 2);
+        const dist = Math.min(Math.sqrt(dx * dx + dy * dy), size / 2 - stickSize / 2);
+        const angle = Math.atan2(dy, dx);
+        const stickX = Math.cos(angle) * dist + size / 2 - stickSize / 2;
+        const stickY = Math.sin(angle) * dist + size / 2 - stickSize / 2;
+        stick.style.left = stickX + 'px';
+        stick.style.top = stickY + 'px';
+        // 方向判断
+        const direction = getDirection(dx, dy);
+        if (direction && direction !== lastDirection) {
+            let key;
+            switch (direction) {
+                case 'up': key = 'ArrowUp'; break;
+                case 'down': key = 'ArrowDown'; break;
+                case 'left': key = 'ArrowLeft'; break;
+                case 'right': key = 'ArrowRight'; break;
+            }
+            if (window.game && typeof window.game.handleKeyPress === 'function') {
+                window.game.handleKeyPress({ key, preventDefault: () => { } });
+            }
+            lastDirection = direction;
+        }
+        if (!direction) lastDirection = null;
+    }
+
+    function resetStick() {
+        stick.style.left = (size - stickSize) / 2 + 'px';
+        stick.style.top = (size - stickSize) / 2 + 'px';
+        lastDirection = null;
+    }
+
+    // 触摸事件
+    base.addEventListener('touchstart', function (e) {
+        dragging = true;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        handleMove(touch.clientX, touch.clientY);
+    });
+    base.addEventListener('touchmove', function (e) {
+        if (!dragging) return;
+        const touch = e.touches[0];
+        handleMove(touch.clientX, touch.clientY);
+    });
+    base.addEventListener('touchend', function () {
+        dragging = false;
+        resetStick();
+    });
+    // 鼠标事件
+    base.addEventListener('mousedown', function (e) {
+        dragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        handleMove(e.clientX, e.clientY);
+    });
+    window.addEventListener('mousemove', function (e) {
+        if (!dragging) return;
+        handleMove(e.clientX, e.clientY);
+    });
+    window.addEventListener('mouseup', function () {
+        if (dragging) {
+            dragging = false;
+            resetStick();
+        }
+    });
+}
+
+// 页面加载后初始化原生摇杆
+window.addEventListener('DOMContentLoaded', function () {
     window.game = new Game();
+    createNativeJoystick({
+        zone: document.getElementById('joystick-zone'),
+        size: 100
+    });
 });
